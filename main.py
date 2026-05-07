@@ -1175,7 +1175,7 @@ class BGLeitungPanelView(discord.ui.View):
     def _get_key(self, message: discord.Message) -> str:
         return _extract_field_value(message, "Fraktion-Schlüssel") or self.fraktion_key
 
-    @discord.ui.button(label="Mitglied aufnehmen", style=discord.ButtonStyle.green,     custom_id="bg_leitung_add",    emoji="➕")
+    @discord.ui.button(label="Mitglied aufnehmen", style=discord.ButtonStyle.green,     custom_id="bg_leitung_add")
     async def add_member(self, interaction: discord.Interaction, button: discord.ui.Button):
         key = self._get_key(interaction.message)
         if not is_fraktion_leitung(interaction, key):
@@ -1183,7 +1183,7 @@ class BGLeitungPanelView(discord.ui.View):
             return
         await interaction.response.send_modal(BGMitgliedHinzufuegenModal(key))
 
-    @discord.ui.button(label="Mitglied entfernen", style=discord.ButtonStyle.danger,     custom_id="bg_leitung_remove", emoji="➖")
+    @discord.ui.button(label="Mitglied entfernen", style=discord.ButtonStyle.danger,     custom_id="bg_leitung_remove")
     async def remove_member(self, interaction: discord.Interaction, button: discord.ui.Button):
         key = self._get_key(interaction.message)
         if not is_fraktion_leitung(interaction, key):
@@ -1191,7 +1191,7 @@ class BGLeitungPanelView(discord.ui.View):
             return
         await interaction.response.send_modal(BGMitgliedEntfernenModal(key))
 
-    @discord.ui.button(label="Beitrag einzahlen",  style=discord.ButtonStyle.primary,   custom_id="bg_leitung_zahlen", emoji="💰")
+    @discord.ui.button(label="Beitrag einzahlen",  style=discord.ButtonStyle.primary,   custom_id="bg_leitung_zahlen")
     async def zahlen(self, interaction: discord.Interaction, button: discord.ui.Button):
         key = self._get_key(interaction.message)
         if not is_fraktion_leitung(interaction, key):
@@ -1202,7 +1202,7 @@ class BGLeitungPanelView(discord.ui.View):
             return
         await interaction.response.send_modal(BGEinzahlungModal(key))
 
-    @discord.ui.button(label="Mitgliederliste",    style=discord.ButtonStyle.secondary, custom_id="bg_leitung_liste",  emoji="📋")
+    @discord.ui.button(label="Mitgliederliste",    style=discord.ButtonStyle.secondary, custom_id="bg_leitung_liste")
     async def liste(self, interaction: discord.Interaction, button: discord.ui.Button):
         key  = self._get_key(interaction.message)
         frak = bg_data["fraktionen"].get(key)
@@ -1544,7 +1544,7 @@ async def bg_fraktion_hinzufuegen(
     # ─── 1) Forum-Channel erstellen ─────────────────────────
     forum_ch = None
     try:
-        ch_name  = f"{'🏭' if typ == 'firma' else '🛡️'}-bg-{name.lower().replace(' ', '-')}"
+        ch_name  = f"{'🏭' if typ == 'firma' else '【🛡️】'}-{name.lower().replace(' ', '-')}"
         forum_ch = await interaction.guild.create_forum(
             name=ch_name,
             category=category,
